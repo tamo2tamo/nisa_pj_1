@@ -32,8 +32,8 @@
         <h1>自分に合う NISA運用タイプを探す</h1>
         <p>属性・商品分類・成績を組み合わせ、似た条件の運用者を円グラフで比較できます。</p>
         <div class="hero-cta">
-          <button class="btn">おすすめ順で探す</button>
-          <button class="btn ghost">投稿して審査に出す</button>
+          <button class="btn">人気順で探す</button>
+          <button class="btn ghost">投信する</button>
         </div>
       </div>
       <div class="hero-panel">
@@ -47,7 +47,7 @@
 
     <section id="list" class="page">
       <div class="page-head">
-        <h2>検索一覧</h2>
+        <h2>検索</h2>
         <div class="sort-tools">
           <label>並び替え
             <select id="sortMode">
@@ -61,26 +61,24 @@
       </div>
       <div class="layout">
         <aside class="filters card">
-          <h3>絞り込み（投稿と同じ選択肢）</h3>
+          <h3>絞り込み</h3>
           <div class="grid2">
-            <label>年代<select><option>30代</option><option>20代</option><option>40代</option><option>50代</option><option>60代+</option></select></label>
-            <label>家族構成<select><option>既婚子あり</option><option>独身</option><option>既婚子なし</option><option>その他</option></select></label>
-            <label>住居<select><option>持家</option><option>賃貸</option></select></label>
-            <label>職業<select><option>会社員</option><option>公務員</option><option>自営業</option><option>学生</option><option>無職</option><option>その他</option></select></label>
-            <label>年収帯<select><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
-            <label>投資歴<select><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5年以上</option></select></label>
-            <label>NISA<select><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
-            <label>リスク許容度<select><option>中</option><option>低</option><option>高</option></select></label>
-            <label>投資方針<select><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
-            <label>投資商品分類（主）<select id="searchMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
-            <label>投資商品分類（副）<select><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
-            <label>投資 / 貯金 配分<select><option>95 / 5</option><option>90 / 10</option><option>80 / 20</option><option>70 / 30</option></select></label>
+            <label>年代<select id="searchAge"><option>30代</option><option>20代</option><option>40代</option><option>50代</option><option>60代+</option></select></label>
+            <label>職業<select id="searchOccupation"><option>会社員</option><option>公務員</option><option>自営業</option><option>学生</option><option>無職</option><option>その他</option></select></label>
+            <label>年収帯<select id="searchIncome"><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
+            <label>投資歴<select id="searchExperience"><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5-10年</option><option>10年以上</option></select></label>
+            <label>NISA<select id="searchNisa"><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
+            <label>リスク許容度<select id="searchRisk"><option>中</option><option>低</option><option>高</option></select></label>
+            <label>投資方針<select id="searchPolicy"><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
+            <label>投資商品分類（主）<select id="searchMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券（国内）</option><option>債券（海外）</option><option>FX</option><option>金</option><option>その他</option></select></label>
+            <label>投資商品分類（副）<select id="searchSubProduct"><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券（国内）</option><option>債券（海外）</option><option>FX</option><option>金</option><option>その他</option></select></label>
+            <label>投資 / 現金 配分<select id="searchRatio"><option>5 / 95</option><option>10 / 90</option><option>25 / 75</option><option>50 / 50</option></select></label>
           </div>
           <div class="alloc-box">
-            <h4>投資 / 貯金 配分</h4>
+            <h4>投資 / 現金 配分</h4>
             <div class="bars">
               <div><span>投資</span><b>95%</b></div>
-              <div><span>貯金</span><b>5%</b></div>
+              <div><span>現金</span><b>5%</b></div>
             </div>
           </div>
           <div class="form-actions">
@@ -90,7 +88,7 @@
         </aside>
 
         <div id="resultsList" class="results">
-          <article class="card post" data-static="1" data-post-id="SAMPLE-001" data-main-product="投信（海外インデックス）" data-created="2026-01-01T00:00:00.000Z" data-age="30代" data-family="既婚子あり" data-housing="持家" data-occupation="会社員" data-perf1y="11.8" data-perfsince="34.2">
+          <article class="card post" data-static="1" data-post-id="SAMPLE-001" data-main-product="投信（海外インデックス）" data-sub-product="株（国内）" data-created="2026-01-01T00:00:00.000Z" data-age="30代" data-family="既婚子あり" data-housing="持家" data-occupation="会社員" data-income="500-800" data-experience="3-5年" data-nisa="両方" data-risk="中" data-policy="バランス" data-invest-ratio="95" data-cash-ratio="5" data-perf1y="11.8" data-perfsince="34.2">
             <div class="meta"><span>30代</span><span>既婚子あり</span><span>会社員</span><span>持家</span></div>
             <h3>商品分類が近い運用者</h3>
             <p>過去1年 <b>+11.8%</b> / 開始来 <b>+34.2%</b></p>
@@ -101,13 +99,15 @@
                 <li><i style="background:#3e9cab"></i>株（海外）20%</li>
                 <li><i style="background:#66b8a1"></i>投信インデックス 30%</li>
                 <li><i style="background:#87c97b"></i>投信アクティブ 10%</li>
-                <li><i style="background:#f2b765"></i>不動産・債券 10%</li>
-                <li><i style="background:#c7d6d2"></i>貯金 5%</li>
+                <li><i style="background:#f2b765"></i>不動産（REIT）5%</li>
+                <li><i style="background:#eba368"></i>債券（国内/海外）3%</li>
+                <li><i style="background:#c7d6d2"></i>FX・金・その他 2%</li>
               </ul>
             </div>
             <div class="form-actions">
               <a class="btn ghost" href="nisa_post_detail.html?id=SAMPLE-001">詳細を見る</a>
             </div>
+            <p class="ga-note match-score"></p>
             <div class="reacts"><button>参考になった</button><button>共感した</button><button>真似したい</button></div>
           </article>
         </div>
@@ -127,15 +127,44 @@
           <label>家族構成<select id="submitFamily"><option>既婚子あり</option><option>独身</option><option>既婚子なし</option><option>その他</option></select></label>
           <label>住居<select id="submitHousing"><option>持家</option><option>賃貸</option></select></label>
           <label>職業<select id="submitOccupation"><option>会社員</option><option>公務員</option><option>自営業</option><option>学生</option><option>無職</option><option>その他</option></select></label>
-          <label>年収帯<select><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
-          <label>投資歴<select><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5年以上</option></select></label>
-          <label>NISA<select><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
-          <label>リスク許容度<select><option>中</option><option>低</option><option>高</option></select></label>
-          <label>投資方針<select><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
-          <label>投資商品分類（主）<select id="submitMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
-          <label>投資商品分類（副）<select id="submitSubProduct"><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
-          <label>投資 / 貯金 配分<select><option>95 / 5</option><option>90 / 10</option><option>80 / 20</option><option>70 / 30</option></select></label>
+          <label>年収帯<select id="submitIncome"><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
+          <label>投資歴<select id="submitExperience"><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5-10年</option><option>10年以上</option></select></label>
+          <label>NISA<select id="submitNisa"><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
+          <label>リスク許容度<select id="submitRisk"><option>中</option><option>低</option><option>高</option></select></label>
+          <label>投資方針<select id="submitPolicy"><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
+          <label>投資商品分類（主）<select id="submitMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券（国内）</option><option>債券（海外）</option><option>FX</option><option>金</option><option>その他</option></select></label>
+          <label>投資商品分類（副）<select id="submitSubProduct"><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券（国内）</option><option>債券（海外）</option><option>FX</option><option>金</option><option>その他</option></select></label>
+          <label>利回り（過去1年, %）
+            <input id="perf1yInput" type="number" min="-1000" max="1000" step="0.1" value="12.4" />
+          </label>
+          <label>利回り（開始来, %）
+            <input id="perfSinceInput" type="number" min="-1000" max="1000" step="0.1" value="35.6" />
+          </label>
         </div>
+
+        <h3 class="subhead">商品分類配分（合計100%）</h3>
+        <div class="grid3">
+          <label>株（国内, %）<input id="allocStockDomestic" type="number" min="0" max="100" value="20" /></label>
+          <label>株（海外, %）<input id="allocStockForeign" type="number" min="0" max="100" value="25" /></label>
+          <label>投信（国内インデックス, %）<input id="allocFundDomIdx" type="number" min="0" max="100" value="15" /></label>
+          <label>投信（海外インデックス, %）<input id="allocFundForIdx" type="number" min="0" max="100" value="20" /></label>
+          <label>投信（国内アクティブ, %）<input id="allocFundDomAct" type="number" min="0" max="100" value="5" /></label>
+          <label>投信（海外アクティブ, %）<input id="allocFundForAct" type="number" min="0" max="100" value="5" /></label>
+          <label>不動産（REIT, %）<input id="allocReit" type="number" min="0" max="100" value="5" /></label>
+          <label>債券（国内, %）<input id="allocBondDomestic" type="number" min="0" max="100" value="2" /></label>
+          <label>債券（海外, %）<input id="allocBondForeign" type="number" min="0" max="100" value="1" /></label>
+          <label>FX（%）<input id="allocFx" type="number" min="0" max="100" value="1" /></label>
+          <label>金（%）<input id="allocGold" type="number" min="0" max="100" value="1" /></label>
+          <label>その他（%）<input id="allocOther" type="number" min="0" max="100" value="0" /></label>
+        </div>
+        <p id="allocStatus" class="ga-note">商品分類合計: 100%</p>
+
+        <h3 class="subhead">投資 / 現金 比率（合計100%）</h3>
+        <div class="grid2">
+          <label>投資（%）<input id="investRatio" type="number" min="0" max="100" value="98" /></label>
+          <label>現金（%）<input id="cashRatio" type="number" min="0" max="100" value="2" /></label>
+        </div>
+        <p id="ratioStatus" class="ga-note">投資+現金: 100%</p>
         <label>自由記述（200字以内）
           <textarea id="freeText" rows="5" maxlength="200" placeholder="運用の考え方、リバランス頻度、再現できるルールを記入"></textarea>
         </label>
@@ -150,21 +179,10 @@
           <p id="reviewPreview"></p>
         </div>
         <div class="form-actions">
-          <button id="submitQueuedBtn" type="button">審査キューへ送信</button>
+          <button id="submitQueuedBtn" type="button">投稿する</button>
         </div>
         <p id="submitStatus" class="ga-note"></p>
-        <p class="notice">投稿後ステータス: <b>queued</b>（審査後に公開）</p>
-      </div>
-    </section>
-
-    <section id="auth" class="page">
-      <h2>認証フロー</h2>
-      <div class="auth-flow">
-        <div class="card"><h3>1段階目</h3><p>メール or Google ログイン</p></div>
-        <div class="arrow">→</div>
-        <div class="card"><h3>2段階目</h3><p>TOTP (Google Authenticator)</p></div>
-        <div class="arrow">→</div>
-        <div class="card"><h3>完了</h3><p>利用者機能が有効化</p></div>
+        <p class="notice">投稿後ステータス: <b>queued</b>（投稿完了。承認後に公開）</p>
       </div>
     </section>
   </div>
@@ -181,9 +199,43 @@
     const submitFamily = document.getElementById("submitFamily");
     const submitHousing = document.getElementById("submitHousing");
     const submitOccupation = document.getElementById("submitOccupation");
+    const submitIncome = document.getElementById("submitIncome");
+    const submitExperience = document.getElementById("submitExperience");
+    const submitNisa = document.getElementById("submitNisa");
+    const submitRisk = document.getElementById("submitRisk");
+    const submitPolicy = document.getElementById("submitPolicy");
     const submitMainProduct = document.getElementById("submitMainProduct");
     const submitSubProduct = document.getElementById("submitSubProduct");
+    const perf1yInput = document.getElementById("perf1yInput");
+    const perfSinceInput = document.getElementById("perfSinceInput");
+    const investRatio = document.getElementById("investRatio");
+    const cashRatio = document.getElementById("cashRatio");
+    const allocStatus = document.getElementById("allocStatus");
+    const ratioStatus = document.getElementById("ratioStatus");
+    const allocationInputs = [
+      document.getElementById("allocStockDomestic"),
+      document.getElementById("allocStockForeign"),
+      document.getElementById("allocFundDomIdx"),
+      document.getElementById("allocFundForIdx"),
+      document.getElementById("allocFundDomAct"),
+      document.getElementById("allocFundForAct"),
+      document.getElementById("allocReit"),
+      document.getElementById("allocBondDomestic"),
+      document.getElementById("allocBondForeign"),
+      document.getElementById("allocFx"),
+      document.getElementById("allocGold"),
+      document.getElementById("allocOther")
+    ];
+    const searchAge = document.getElementById("searchAge");
+    const searchOccupation = document.getElementById("searchOccupation");
+    const searchIncome = document.getElementById("searchIncome");
+    const searchExperience = document.getElementById("searchExperience");
+    const searchNisa = document.getElementById("searchNisa");
+    const searchRisk = document.getElementById("searchRisk");
+    const searchPolicy = document.getElementById("searchPolicy");
     const searchMainProduct = document.getElementById("searchMainProduct");
+    const searchSubProduct = document.getElementById("searchSubProduct");
+    const searchRatio = document.getElementById("searchRatio");
     const sortMode = document.getElementById("sortMode");
     const searchBtn = document.getElementById("searchBtn");
     const searchStatus = document.getElementById("searchStatus");
@@ -216,6 +268,11 @@
 
       reviewPreview.textContent = text ? `内容: ${text}` : "内容: （未入力）";
 
+      const allocationTotal = allocationInputs.reduce((sum, el) => sum + Number(el.value || 0), 0);
+      const ratioTotal = Number(investRatio.value || 0) + Number(cashRatio.value || 0);
+      const perf1y = Number(perf1yInput.value);
+      const perfSince = Number(perfSinceInput.value);
+
       if (!text) {
         reviewPanel.className = "check-result";
         reviewSummary.textContent = "ユーザー名と投稿内容を入力してから確認してください。";
@@ -230,9 +287,34 @@
         return;
       }
 
+      if (Math.abs(allocationTotal - 100) > 0.0001) {
+        reviewPanel.className = "check-result ng";
+        reviewSummary.textContent = "商品分類の合計を100%にしてください。";
+        reviewNgWords.textContent = `現在の合計: ${allocationTotal}%`;
+        return;
+      }
+
+      if (Math.abs(ratioTotal - 100) > 0.0001) {
+        reviewPanel.className = "check-result ng";
+        reviewSummary.textContent = "投資と現金の比率合計を100%にしてください。";
+        reviewNgWords.textContent = `現在の合計: ${ratioTotal}%`;
+        return;
+      }
+
+      if (
+        Number.isNaN(perf1y) || Number.isNaN(perfSince) ||
+        perf1y < -1000 || perf1y > 1000 ||
+        perfSince < -1000 || perfSince > 1000
+      ) {
+        reviewPanel.className = "check-result ng";
+        reviewSummary.textContent = "利回りは -1000% から 1000% の範囲で入力してください。";
+        reviewNgWords.textContent = "";
+        return;
+      }
+
       if (hits.length === 0 && !hasUrl) {
         reviewPanel.className = "check-result ok";
-        reviewSummary.textContent = "NGワード・URLは検知されませんでした。審査キューへ送信可能です。";
+        reviewSummary.textContent = "NGワード・URLは検知されませんでした。投稿できます。";
         reviewNgWords.textContent = "";
         return;
       }
@@ -242,16 +324,38 @@
       reviewNgWords.textContent = `検知: ${[...hits, hasUrl ? "URL/外部リンク疑い" : ""].filter(Boolean).join(", ")}`;
     };
 
+    const updateAllocationStatus = () => {
+      const total = allocationInputs.reduce((sum, el) => sum + Number(el.value || 0), 0);
+      allocStatus.textContent = `商品分類合計: ${total}%`;
+    };
+
+    const updateRatioStatus = () => {
+      const total = Number(investRatio.value || 0) + Number(cashRatio.value || 0);
+      ratioStatus.textContent = `投資+現金: ${total}%`;
+    };
+
     const runSearch = () => {
-      const selected = searchMainProduct.value;
       const cards = [...resultsList.querySelectorAll(".post")];
-      let visible = 0;
+      let topScore = -1;
+      let topCount = 0;
       cards.forEach((card) => {
-        const matches = card.dataset.mainProduct === selected;
-        card.style.display = matches ? "" : "none";
-        if (matches) visible += 1;
+        const score = calculateMatchScore(card);
+        const total = calculateMatchTotal();
+        card.dataset.matchScore = String(score);
+        const scoreEl = card.querySelector(".match-score");
+        if (scoreEl) {
+          scoreEl.textContent = `近さ: ${score}/${total}`;
+        }
+        card.style.display = "";
+        if (score > topScore) {
+          topScore = score;
+          topCount = 1;
+        } else if (score === topScore) {
+          topCount += 1;
+        }
       });
-      searchStatus.textContent = `${selected} で ${visible} 件ヒット`;
+      sortMode.value = "similar_desc";
+      searchStatus.textContent = `近いケースを表示中: 最高一致 ${topScore}/${calculateMatchTotal()}（${topCount}件）`;
       applySort();
       saveSearchPreferences();
     };
@@ -261,19 +365,31 @@
       perf1y: Number(card.dataset.perf1y || 0),
       perfSince: Number(card.dataset.perfsince || 0),
       age: card.dataset.age || "",
-      family: card.dataset.family || "",
-      housing: card.dataset.housing || "",
       occupation: card.dataset.occupation || "",
-      mainProduct: card.dataset.mainProduct || ""
+      income: card.dataset.income || "",
+      experience: card.dataset.experience || "",
+      nisa: card.dataset.nisa || "",
+      risk: card.dataset.risk || "",
+      policy: card.dataset.policy || "",
+      mainProduct: card.dataset.mainProduct || "",
+      subProduct: card.dataset.subProduct || "",
+      ratio: `${card.dataset.investRatio || "0"} / ${card.dataset.cashRatio || "0"}`
     });
 
-    const similarityScore = (data) => {
+    const calculateMatchTotal = () => 9;
+
+    const calculateMatchScore = (card) => {
+      const data = getCardData(card);
       let score = 0;
-      if (data.age === "30代") score += 1;
-      if (data.family === "既婚子あり") score += 1;
-      if (data.housing === "持家") score += 1;
-      if (data.occupation === "会社員") score += 1;
+      if (data.age === searchAge.value) score += 1;
+      if (data.occupation === searchOccupation.value) score += 1;
+      if (data.income === searchIncome.value) score += 1;
+      if (data.experience === searchExperience.value) score += 1;
+      if (data.nisa === searchNisa.value) score += 1;
+      if (data.risk === searchRisk.value) score += 1;
+      if (data.policy === searchPolicy.value) score += 1;
       if (data.mainProduct === searchMainProduct.value) score += 1;
+      if (data.subProduct === searchSubProduct.value || data.ratio === searchRatio.value) score += 1;
       return score;
     };
 
@@ -285,7 +401,11 @@
         const db = getCardData(b);
         if (mode === "perf_1y_desc") return db.perf1y - da.perf1y;
         if (mode === "perf_since_desc") return db.perfSince - da.perfSince;
-        if (mode === "similar_desc") return similarityScore(db) - similarityScore(da);
+        if (mode === "similar_desc") {
+          const scoreA = Number(a.dataset.matchScore || 0);
+          const scoreB = Number(b.dataset.matchScore || 0);
+          return scoreB - scoreA;
+        }
         return db.created - da.created;
       });
       cards.forEach((card) => resultsList.appendChild(card));
@@ -329,15 +449,26 @@
 
     const createPublishedCard = (post) => {
       const note = post.note ? escapeHtml(post.note.slice(0, 120)) : "投稿コメントなし";
+      const investRatioText = Number.isFinite(Number(post.invest_ratio))
+        ? `${Number(post.invest_ratio)} / ${Number(post.cash_ratio || 0)}`
+        : "未設定";
       return `
         <article class="card post"
           data-dynamic="1"
           data-main-product="${escapeHtml(post.main_product)}"
+          data-sub-product="${escapeHtml(post.sub_product)}"
           data-created="${escapeHtml(post.created_at || "")}"
           data-age="${escapeHtml(post.age)}"
           data-family="${escapeHtml(post.family)}"
           data-housing="${escapeHtml(post.housing)}"
           data-occupation="${escapeHtml(post.occupation)}"
+          data-income="${escapeHtml(post.income || "")}"
+          data-experience="${escapeHtml(post.experience || "")}"
+          data-nisa="${escapeHtml(post.nisa || "")}"
+          data-risk="${escapeHtml(post.risk || "")}"
+          data-policy="${escapeHtml(post.policy || "")}"
+          data-invest-ratio="${escapeHtml(String(post.invest_ratio || 0))}"
+          data-cash-ratio="${escapeHtml(String(post.cash_ratio || 0))}"
           data-perf1y="${Number(post.perf_1y).toFixed(1)}"
           data-perfsince="${Number(post.perf_since).toFixed(1)}">
           <div class="meta">
@@ -353,12 +484,14 @@
             <div class="bars">
               <div><span>主分類</span><b>${escapeHtml(post.main_product)}</b></div>
               <div><span>副分類</span><b>${escapeHtml(post.sub_product)}</b></div>
+              <div><span>投資/現金</span><b>${escapeHtml(investRatioText)}</b></div>
             </div>
           </div>
           <p class="ga-note">${note}</p>
           <div class="form-actions">
             <a class="btn ghost" href="nisa_post_detail.html?id=${encodeURIComponent(post.id)}">詳細を見る</a>
           </div>
+          <p class="ga-note match-score"></p>
           <div class="reacts"><button>参考になった</button><button>共感した</button><button>真似したい</button></div>
         </article>
       `;
@@ -389,17 +522,36 @@
         family: submitFamily.value,
         housing: submitHousing.value,
         occupation: submitOccupation.value,
+        income: submitIncome.value,
+        experience: submitExperience.value,
+        nisa: submitNisa.value,
+        risk: submitRisk.value,
+        policy: submitPolicy.value,
         main_product: submitMainProduct.value,
         sub_product: submitSubProduct.value,
-        perf_1y: 5 + Math.random() * 12,
-        perf_since: 10 + Math.random() * 35,
+        invest_ratio: Number(investRatio.value),
+        cash_ratio: Number(cashRatio.value),
+        alloc_stock_domestic: Number(document.getElementById("allocStockDomestic").value || 0),
+        alloc_stock_foreign: Number(document.getElementById("allocStockForeign").value || 0),
+        alloc_fund_dom_index: Number(document.getElementById("allocFundDomIdx").value || 0),
+        alloc_fund_for_index: Number(document.getElementById("allocFundForIdx").value || 0),
+        alloc_fund_dom_active: Number(document.getElementById("allocFundDomAct").value || 0),
+        alloc_fund_for_active: Number(document.getElementById("allocFundForAct").value || 0),
+        alloc_reit: Number(document.getElementById("allocReit").value || 0),
+        alloc_bond_domestic: Number(document.getElementById("allocBondDomestic").value || 0),
+        alloc_bond_foreign: Number(document.getElementById("allocBondForeign").value || 0),
+        alloc_fx: Number(document.getElementById("allocFx").value || 0),
+        alloc_gold: Number(document.getElementById("allocGold").value || 0),
+        alloc_other: Number(document.getElementById("allocOther").value || 0),
+        perf_1y: Number(perf1yInput.value),
+        perf_since: Number(perfSinceInput.value),
         note: freeText.value.trim(),
         status: "queued",
         created_at: new Date().toISOString()
       };
       queued.unshift(post);
       localStorage.setItem(queuedKey, JSON.stringify(queued));
-      submitStatus.textContent = `送信完了: ${post.id} を審査キューに追加しました。`;
+      submitStatus.textContent = `投稿完了: ${post.id} を投稿しました。`;
       freeText.value = "";
       updateCount();
     };
@@ -410,6 +562,9 @@
     searchBtn.addEventListener("click", runSearch);
     sortMode.addEventListener("change", applySort);
     submitQueuedBtn.addEventListener("click", submitQueued);
+    allocationInputs.forEach((el) => el.addEventListener("input", updateAllocationStatus));
+    investRatio.addEventListener("input", updateRatioStatus);
+    cashRatio.addEventListener("input", updateRatioStatus);
     filterSelects.forEach((el) => {
       el.addEventListener("change", saveSearchPreferences);
     });
@@ -421,6 +576,8 @@
     });
     updateCount();
     updateDisplayName();
+    updateAllocationStatus();
+    updateRatioStatus();
     restoreSearchPreferences();
     renderPublishedPosts();
     runSearch();

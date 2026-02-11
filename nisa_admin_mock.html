@@ -200,6 +200,20 @@
         p.occupation,
         p.main_product,
         p.sub_product,
+        Number(p.invest_ratio || 0).toFixed(1),
+        Number(p.cash_ratio || 0).toFixed(1),
+        Number(p.alloc_stock_domestic || 0).toFixed(1),
+        Number(p.alloc_stock_foreign || 0).toFixed(1),
+        Number(p.alloc_fund_dom_index || 0).toFixed(1),
+        Number(p.alloc_fund_for_index || 0).toFixed(1),
+        Number(p.alloc_fund_dom_active || 0).toFixed(1),
+        Number(p.alloc_fund_for_active || 0).toFixed(1),
+        Number(p.alloc_reit || 0).toFixed(1),
+        Number(p.alloc_bond_domestic || 0).toFixed(1),
+        Number(p.alloc_bond_foreign || 0).toFixed(1),
+        Number(p.alloc_fx || 0).toFixed(1),
+        Number(p.alloc_gold || 0).toFixed(1),
+        Number(p.alloc_other || 0).toFixed(1),
         Number(p.perf_1y || 0).toFixed(1),
         Number(p.perf_since || 0).toFixed(1),
         p.note || "",
@@ -208,7 +222,16 @@
       ]);
       downloadCsv(
         `published_posts_${new Date().toISOString().slice(0, 10)}.csv`,
-        ["id", "display_name", "age", "family", "housing", "occupation", "main_product", "sub_product", "perf_1y", "perf_since", "note", "status", "created_at"],
+        [
+          "id", "display_name", "age", "family", "housing", "occupation",
+          "main_product", "sub_product", "invest_ratio", "cash_ratio",
+          "alloc_stock_domestic", "alloc_stock_foreign",
+          "alloc_fund_dom_index", "alloc_fund_for_index",
+          "alloc_fund_dom_active", "alloc_fund_for_active",
+          "alloc_reit", "alloc_bond_domestic", "alloc_bond_foreign",
+          "alloc_fx", "alloc_gold", "alloc_other",
+          "perf_1y", "perf_since", "note", "status", "created_at"
+        ],
         rows
       );
       exportStatus.textContent = `承認済み投稿CSVを出力しました（${rows.length}件）`;

@@ -32,6 +32,18 @@
             <div class="bars">
               <div><span>主分類</span><b id="detailMainProduct"></b></div>
               <div><span>副分類</span><b id="detailSubProduct"></b></div>
+              <div><span>投資/現金</span><b id="detailRatio"></b></div>
+            </div>
+          </div>
+          <div class="alloc-box">
+            <h4>分類内訳（%）</h4>
+            <div class="bars">
+              <div><span>株（国内/海外）</span><b id="detailAllocStocks"></b></div>
+              <div><span>投信（国内/海外インデックス）</span><b id="detailAllocFundIndex"></b></div>
+              <div><span>投信（国内/海外アクティブ）</span><b id="detailAllocFundActive"></b></div>
+              <div><span>不動産（REIT）</span><b id="detailAllocReit"></b></div>
+              <div><span>債券（国内/海外）</span><b id="detailAllocBonds"></b></div>
+              <div><span>FX/金/その他</span><b id="detailAllocOthers"></b></div>
             </div>
           </div>
           <div class="alloc-box">
@@ -90,6 +102,20 @@
       occupation: "会社員",
       main_product: "投信（海外インデックス）",
       sub_product: "株（国内）",
+      invest_ratio: 95,
+      cash_ratio: 5,
+      alloc_stock_domestic: 25,
+      alloc_stock_foreign: 20,
+      alloc_fund_dom_index: 10,
+      alloc_fund_for_index: 20,
+      alloc_fund_dom_active: 5,
+      alloc_fund_for_active: 5,
+      alloc_reit: 5,
+      alloc_bond_domestic: 2,
+      alloc_bond_foreign: 1,
+      alloc_fx: 1,
+      alloc_gold: 1,
+      alloc_other: 0,
       perf_1y: 11.8,
       perf_since: 34.2,
       note: "インデックス中心で長期運用。四半期ごとに配分見直し。",
@@ -113,6 +139,13 @@
       perf.textContent = "";
       document.getElementById("detailMainProduct").textContent = "-";
       document.getElementById("detailSubProduct").textContent = "-";
+      document.getElementById("detailRatio").textContent = "-";
+      document.getElementById("detailAllocStocks").textContent = "-";
+      document.getElementById("detailAllocFundIndex").textContent = "-";
+      document.getElementById("detailAllocFundActive").textContent = "-";
+      document.getElementById("detailAllocReit").textContent = "-";
+      document.getElementById("detailAllocBonds").textContent = "-";
+      document.getElementById("detailAllocOthers").textContent = "-";
       document.getElementById("detailNote").textContent = "通報対応により閲覧できません。";
       document.getElementById("detailId").textContent = String(post.id);
       document.getElementById("detailUser").textContent = "-";
@@ -129,6 +162,13 @@
       perf.innerHTML = `過去1年 <b>+${Number(post.perf_1y).toFixed(1)}%</b> / 開始来 <b>+${Number(post.perf_since).toFixed(1)}%</b>`;
       document.getElementById("detailMainProduct").textContent = String(post.main_product);
       document.getElementById("detailSubProduct").textContent = String(post.sub_product);
+      document.getElementById("detailRatio").textContent = `${Number(post.invest_ratio || 0).toFixed(1)} / ${Number(post.cash_ratio || 0).toFixed(1)}`;
+      document.getElementById("detailAllocStocks").textContent = `${Number(post.alloc_stock_domestic || 0).toFixed(1)} / ${Number(post.alloc_stock_foreign || 0).toFixed(1)}`;
+      document.getElementById("detailAllocFundIndex").textContent = `${Number(post.alloc_fund_dom_index || 0).toFixed(1)} / ${Number(post.alloc_fund_for_index || 0).toFixed(1)}`;
+      document.getElementById("detailAllocFundActive").textContent = `${Number(post.alloc_fund_dom_active || 0).toFixed(1)} / ${Number(post.alloc_fund_for_active || 0).toFixed(1)}`;
+      document.getElementById("detailAllocReit").textContent = `${Number(post.alloc_reit || 0).toFixed(1)}`;
+      document.getElementById("detailAllocBonds").textContent = `${Number(post.alloc_bond_domestic || 0).toFixed(1)} / ${Number(post.alloc_bond_foreign || 0).toFixed(1)}`;
+      document.getElementById("detailAllocOthers").textContent = `${Number(post.alloc_fx || 0).toFixed(1)} / ${Number(post.alloc_gold || 0).toFixed(1)} / ${Number(post.alloc_other || 0).toFixed(1)}`;
       document.getElementById("detailNote").textContent = String(post.note || "自由記述なし");
       document.getElementById("detailId").textContent = String(post.id);
       document.getElementById("detailUser").textContent = `@${String(post.display_name)}`;
