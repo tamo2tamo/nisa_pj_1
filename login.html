@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NISA Lens | Login</title>
+  <link rel="stylesheet" href="nisa_mock.css" />
+</head>
+<body>
+  <div class="shell shell-narrow">
+    <header class="topbar">
+      <div class="logo">NISA Lens</div>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="nisa_user_mock.html">利用者画面</a>
+      </nav>
+    </header>
+
+    <section class="page">
+      <article class="card auth-card">
+        <p class="eyebrow">ログイン</p>
+        <h1>メール or Google + 2段階認証</h1>
+        <p>ログイン後にTOTPコードを入力すると、投稿・リアクション・通報が可能になります。</p>
+
+        <div class="auth-grid">
+          <section class="auth-step">
+            <h3>1段階目: アカウント認証</h3>
+            <label>メールアドレス
+              <input type="email" placeholder="you@example.com" />
+            </label>
+            <label>パスワード
+              <input type="password" placeholder="********" />
+            </label>
+            <button type="button">メールでログイン</button>
+            <button class="ghost" type="button">Googleでログイン</button>
+          </section>
+
+          <section class="auth-step">
+            <h3>2段階目: TOTP確認</h3>
+            <label>認証コード（6桁）
+              <input type="text" inputmode="numeric" maxlength="6" placeholder="123456" />
+            </label>
+            <button type="button">コードを確認</button>
+            <p class="ga-note">Google Authenticator 等のアプリを使用</p>
+          </section>
+        </div>
+
+        <div class="auth-help">
+          <p>初回はMFAセットアップ（QR読み取り）を実施します。</p>
+          <a class="btn ghost" href="nisa_user_mock.html">ログイン後の利用者画面を見る</a>
+        </div>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

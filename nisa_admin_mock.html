@@ -1,0 +1,266 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NISA Lens Mock - Admin</title>
+  <link rel="stylesheet" href="nisa_mock.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="logo">NISA Lens | Admin</div>
+      <nav class="nav">
+        <a href="nisa_mock.html">入口</a>
+        <a href="#moderation">審査キュー</a>
+        <a href="#reports">通報管理</a>
+        <a href="#ops">運営分析</a>
+      </nav>
+      <a class="btn ghost" href="nisa_user_mock.html">利用者画面</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">管理者画面</p>
+        <h1>投稿審査と健全性運用</h1>
+        <p>新規投稿は queued で受け付け、NG検知・通報状況を踏まえて承認/却下/非公開化を実施します。</p>
+      </div>
+      <div class="hero-panel">
+        <h3>運用ポリシー</h3>
+        <div class="chips">
+          <span>誹謗中傷禁止</span><span>宣伝禁止</span><span>詐欺防止</span><span>URL禁止</span><span>監査ログ</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="moderation" class="page">
+      <div class="page-head">
+        <h2>審査キュー</h2>
+        <div class="ad">管理広告枠（非表示想定）</div>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>投稿ID</th><th>検知結果</th><th>状態</th><th>操作</th></tr></thead>
+          <tbody id="moderationBody">
+            <tr><td>#P-1204</td><td>URL疑い 0 / NG 0</td><td>queued</td><td><button>承認</button> <button class="ghost">却下</button></td></tr>
+            <tr><td>#P-1205</td><td>宣伝疑い 1</td><td>queued</td><td><button class="ghost">精査</button> <button class="ghost">却下</button></td></tr>
+            <tr><td>#P-1206</td><td>悪口語彙 2</td><td>queued</td><td><button class="ghost">却下</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="reports" class="page">
+      <h2>通報管理</h2>
+      <div class="card">
+        <table>
+          <thead><tr><th>通報ID</th><th>対象投稿</th><th>理由</th><th>件数</th><th>対応</th></tr></thead>
+          <tbody id="reportsBody">
+            <tr><td>#R-88</td><td>#P-1177</td><td>宣伝/勧誘</td><td>4</td><td><button>非公開化</button> <button class="ghost">維持</button></td></tr>
+            <tr><td>#R-89</td><td>#P-1181</td><td>誹謗中傷</td><td>2</td><td><button>確認</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="ops" class="page">
+      <h2>運営分析ダッシュボード</h2>
+      <div class="form-actions">
+        <button id="exportPublishedCsvBtn" type="button">承認済み投稿CSV</button>
+        <button id="exportReportsCsvBtn" type="button" class="ghost">通報CSV</button>
+      </div>
+      <p id="exportStatus" class="ga-note"></p>
+      <div class="kpi-grid">
+        <article class="card kpi"><p class="kpi-label">queued件数</p><p class="kpi-value">42</p><p class="kpi-sub">24h</p></article>
+        <article class="card kpi"><p class="kpi-label">承認率</p><p class="kpi-value">78%</p><p class="kpi-sub">7日平均</p></article>
+        <article class="card kpi"><p class="kpi-label">却下率</p><p class="kpi-value">14%</p><p class="kpi-sub">NG検知起因</p></article>
+        <article class="card kpi"><p class="kpi-label">自動非公開</p><p class="kpi-value">8%</p><p class="kpi-sub">通報閾値超え</p></article>
+      </div>
+      <div class="card" style="margin-top:12px;">
+        <h3>流入チャネル</h3>
+        <div class="channel-bars">
+          <div><span>Organic Search</span><i style="width:46%"></i><b>46%</b></div>
+          <div><span>Direct</span><i style="width:28%"></i><b>28%</b></div>
+          <div><span>Referral</span><i style="width:14%"></i><b>14%</b></div>
+          <div><span>Social</span><i style="width:9%"></i><b>9%</b></div>
+          <div><span>Email</span><i style="width:3%"></i><b>3%</b></div>
+        </div>
+      </div>
+      <p class="ga-note">管理者画面は運用監視用途。利用者投稿導線は含めません。</p>
+    </section>
+  </div>
+  <script>
+    const queuedKey = "nisaQueuedPosts";
+    const publishedKey = "nisaPublishedPosts";
+    const reportsKey = "nisaReports";
+    const hiddenKey = "nisaHiddenPostIds";
+    const moderationBody = document.getElementById("moderationBody");
+    const reportsBody = document.getElementById("reportsBody");
+    const exportPublishedCsvBtn = document.getElementById("exportPublishedCsvBtn");
+    const exportReportsCsvBtn = document.getElementById("exportReportsCsvBtn");
+    const exportStatus = document.getElementById("exportStatus");
+
+    const getStore = (key) => JSON.parse(localStorage.getItem(key) || "[]");
+    const setStore = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+
+    const approvePost = (id) => {
+      const queued = getStore(queuedKey);
+      const published = getStore(publishedKey);
+      const target = queued.find((p) => p.id === id);
+      if (!target) return;
+      setStore(queuedKey, queued.filter((p) => p.id !== id));
+      published.unshift({ ...target, status: "published" });
+      setStore(publishedKey, published);
+      renderQueuedRows();
+    };
+
+    const rejectPost = (id) => {
+      const queued = getStore(queuedKey).filter((p) => p.id !== id);
+      setStore(queuedKey, queued);
+      renderQueuedRows();
+    };
+
+    const resolveReport = (id) => {
+      const reports = getStore(reportsKey).map((r) => {
+        if (r.id !== id) return r;
+        return { ...r, status: "closed" };
+      });
+      setStore(reportsKey, reports);
+      renderReportRows();
+    };
+
+    const hidePost = (reportId) => {
+      const reports = getStore(reportsKey);
+      const target = reports.find((r) => r.id === reportId);
+      if (!target) return;
+      const hidden = new Set(getStore(hiddenKey));
+      hidden.add(String(target.post_id));
+      setStore(hiddenKey, [...hidden]);
+      resolveReport(reportId);
+    };
+
+    const renderReportRows = () => {
+      const reports = getStore(reportsKey);
+      reportsBody.querySelectorAll("tr[data-dynamic='1']").forEach((row) => row.remove());
+      if (reports.length === 0) return;
+      const html = reports.map((report) => `
+        <tr data-dynamic="1">
+          <td>${report.id}</td>
+          <td>#${report.post_id}</td>
+          <td>${report.reason}</td>
+          <td>1</td>
+          <td>
+            <button type="button" class="ghost" data-hide="${report.id}">非公開化</button>
+            <button type="button" class="${report.status === "closed" ? "ghost" : ""}" data-resolve="${report.id}">
+              ${report.status === "closed" ? "対応済み" : "対応完了"}
+            </button>
+          </td>
+        </tr>
+      `).join("");
+      reportsBody.insertAdjacentHTML("afterbegin", html);
+      reportsBody.querySelectorAll("button[data-hide]").forEach((btn) => {
+        btn.addEventListener("click", () => hidePost(btn.dataset.hide));
+      });
+      reportsBody.querySelectorAll("button[data-resolve]").forEach((btn) => {
+        if (btn.textContent.trim() === "対応済み") return;
+        btn.addEventListener("click", () => resolveReport(btn.dataset.resolve));
+      });
+    };
+
+    const csvEscape = (value) => {
+      const text = String(value ?? "");
+      return `"${text.replaceAll("\"", "\"\"")}"`;
+    };
+
+    const downloadCsv = (filename, headers, rows) => {
+      const csv = [
+        headers.map(csvEscape).join(","),
+        ...rows.map((row) => row.map(csvEscape).join(","))
+      ].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    const exportPublishedCsv = () => {
+      const hiddenIds = new Set(getStore(hiddenKey));
+      const published = getStore(publishedKey).filter((p) => !hiddenIds.has(String(p.id)));
+      const rows = published.map((p) => [
+        p.id,
+        p.display_name,
+        p.age,
+        p.family,
+        p.housing,
+        p.occupation,
+        p.main_product,
+        p.sub_product,
+        Number(p.perf_1y || 0).toFixed(1),
+        Number(p.perf_since || 0).toFixed(1),
+        p.note || "",
+        p.status || "published",
+        p.created_at || ""
+      ]);
+      downloadCsv(
+        `published_posts_${new Date().toISOString().slice(0, 10)}.csv`,
+        ["id", "display_name", "age", "family", "housing", "occupation", "main_product", "sub_product", "perf_1y", "perf_since", "note", "status", "created_at"],
+        rows
+      );
+      exportStatus.textContent = `承認済み投稿CSVを出力しました（${rows.length}件）`;
+    };
+
+    const exportReportsCsv = () => {
+      const reports = getStore(reportsKey);
+      const rows = reports.map((r) => [
+        r.id,
+        r.post_id,
+        r.reason,
+        r.note || "",
+        r.status || "open",
+        r.created_at || ""
+      ]);
+      downloadCsv(
+        `reports_${new Date().toISOString().slice(0, 10)}.csv`,
+        ["id", "post_id", "reason", "note", "status", "created_at"],
+        rows
+      );
+      exportStatus.textContent = `通報CSVを出力しました（${rows.length}件）`;
+    };
+
+    const renderQueuedRows = () => {
+      const queued = getStore(queuedKey);
+      const dynamicRows = queued.map((post) => `
+        <tr data-dynamic="1">
+          <td>${post.id}</td>
+          <td>自動検知: NG 0 / URL 0<br><small>${post.display_name} / ${post.age} / ${post.main_product}</small></td>
+          <td>queued</td>
+          <td>
+            <button type="button" data-approve="${post.id}">承認</button>
+            <button type="button" class="ghost" data-reject="${post.id}">却下</button>
+          </td>
+        </tr>
+      `).join("");
+
+      moderationBody.querySelectorAll("tr[data-dynamic='1']").forEach((row) => row.remove());
+      moderationBody.insertAdjacentHTML("afterbegin", dynamicRows);
+
+      moderationBody.querySelectorAll("button[data-approve]").forEach((btn) => {
+        btn.addEventListener("click", () => approvePost(btn.dataset.approve));
+      });
+      moderationBody.querySelectorAll("button[data-reject]").forEach((btn) => {
+        btn.addEventListener("click", () => rejectPost(btn.dataset.reject));
+      });
+    };
+
+    renderQueuedRows();
+    renderReportRows();
+    exportPublishedCsvBtn.addEventListener("click", exportPublishedCsv);
+    exportReportsCsvBtn.addEventListener("click", exportReportsCsv);
+  </script>
+</body>
+</html>

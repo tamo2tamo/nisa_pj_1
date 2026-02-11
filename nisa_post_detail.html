@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NISA Lens | 投稿詳細</title>
+  <link rel="stylesheet" href="nisa_mock.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="logo">NISA Lens | Detail</div>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="nisa_user_mock.html">検索一覧</a>
+        <a href="login.html">ログイン</a>
+      </nav>
+    </header>
+
+    <section class="page">
+      <div class="page-head">
+        <h2>投稿詳細</h2>
+        <div class="ad">広告プレースホルダー（詳細）</div>
+      </div>
+      <div class="layout">
+        <article class="card">
+          <div class="meta" id="detailMeta"></div>
+          <h3 id="detailTitle">投稿詳細</h3>
+          <p id="detailPerf"></p>
+          <div class="alloc-box">
+            <h4>商品分類</h4>
+            <div class="bars">
+              <div><span>主分類</span><b id="detailMainProduct"></b></div>
+              <div><span>副分類</span><b id="detailSubProduct"></b></div>
+            </div>
+          </div>
+          <div class="alloc-box">
+            <h4>自由記述</h4>
+            <p id="detailNote"></p>
+          </div>
+          <div class="reacts">
+            <button type="button">参考になった</button>
+            <button type="button">共感した</button>
+            <button type="button">真似したい</button>
+            <button id="reportToggleBtn" type="button" class="ghost">通報</button>
+          </div>
+          <div id="reportPanel" class="alloc-box" style="display:none;">
+            <h4>通報</h4>
+            <label>理由
+              <select id="reportReason">
+                <option>誹謗中傷</option>
+                <option>宣伝/勧誘</option>
+                <option>詐欺疑い</option>
+                <option>不適切な内容</option>
+              </select>
+            </label>
+            <label>補足（任意）
+              <textarea id="reportNote" rows="3" maxlength="200" placeholder="200字以内で入力"></textarea>
+            </label>
+            <div class="form-actions">
+              <button id="submitReportBtn" type="button">通報を送信</button>
+            </div>
+            <p id="reportStatus" class="ga-note"></p>
+          </div>
+        </article>
+
+        <aside class="card">
+          <h3>投稿情報</h3>
+          <div class="bars">
+            <div><span>投稿ID</span><b id="detailId"></b></div>
+            <div><span>投稿者</span><b id="detailUser"></b></div>
+            <div><span>状態</span><b>published</b></div>
+          </div>
+          <p class="ga-note">コメント/DMなし。前向きリアクションのみ。</p>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id") || "SAMPLE-001";
+    const published = JSON.parse(localStorage.getItem("nisaPublishedPosts") || "[]");
+    const sample = {
+      id: "SAMPLE-001",
+      display_name: "sample_user",
+      age: "30代",
+      family: "既婚子あり",
+      housing: "持家",
+      occupation: "会社員",
+      main_product: "投信（海外インデックス）",
+      sub_product: "株（国内）",
+      perf_1y: 11.8,
+      perf_since: 34.2,
+      note: "インデックス中心で長期運用。四半期ごとに配分見直し。",
+      status: "published"
+    };
+
+    const hiddenIds = new Set(JSON.parse(localStorage.getItem("nisaHiddenPostIds") || "[]"));
+    const post = published.find((item) => item.id === id) || sample;
+    const esc = (v) => String(v)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll("\"", "&quot;")
+      .replaceAll("'", "&#039;");
+    const meta = document.getElementById("detailMeta");
+    const perf = document.getElementById("detailPerf");
+
+    if (hiddenIds.has(String(post.id))) {
+      document.getElementById("detailTitle").textContent = "この投稿は非公開です";
+      meta.innerHTML = "";
+      perf.textContent = "";
+      document.getElementById("detailMainProduct").textContent = "-";
+      document.getElementById("detailSubProduct").textContent = "-";
+      document.getElementById("detailNote").textContent = "通報対応により閲覧できません。";
+      document.getElementById("detailId").textContent = String(post.id);
+      document.getElementById("detailUser").textContent = "-";
+      document.getElementById("reportPanel").style.display = "none";
+      document.getElementById("reportToggleBtn").style.display = "none";
+    } else {
+      meta.innerHTML = `
+        <span>${esc(post.age)}</span>
+        <span>${esc(post.family)}</span>
+        <span>${esc(post.occupation)}</span>
+        <span>${esc(post.housing)}</span>
+      `;
+      document.getElementById("detailTitle").textContent = `@${String(post.display_name)} の運用投稿`;
+      perf.innerHTML = `過去1年 <b>+${Number(post.perf_1y).toFixed(1)}%</b> / 開始来 <b>+${Number(post.perf_since).toFixed(1)}%</b>`;
+      document.getElementById("detailMainProduct").textContent = String(post.main_product);
+      document.getElementById("detailSubProduct").textContent = String(post.sub_product);
+      document.getElementById("detailNote").textContent = String(post.note || "自由記述なし");
+      document.getElementById("detailId").textContent = String(post.id);
+      document.getElementById("detailUser").textContent = `@${String(post.display_name)}`;
+    }
+
+    const reportToggleBtn = document.getElementById("reportToggleBtn");
+    const reportPanel = document.getElementById("reportPanel");
+    const submitReportBtn = document.getElementById("submitReportBtn");
+    const reportReason = document.getElementById("reportReason");
+    const reportNote = document.getElementById("reportNote");
+    const reportStatus = document.getElementById("reportStatus");
+
+    if (!hiddenIds.has(String(post.id))) {
+      reportToggleBtn.addEventListener("click", () => {
+        reportPanel.style.display = reportPanel.style.display === "none" ? "block" : "none";
+      });
+
+      submitReportBtn.addEventListener("click", () => {
+        const reportsKey = "nisaReports";
+        const reports = JSON.parse(localStorage.getItem(reportsKey) || "[]");
+        const report = {
+          id: `R-${Date.now()}`,
+          post_id: String(post.id),
+          reason: reportReason.value,
+          note: reportNote.value.trim(),
+          status: "open",
+          created_at: new Date().toISOString()
+        };
+        reports.unshift(report);
+        localStorage.setItem(reportsKey, JSON.stringify(reports));
+        reportStatus.textContent = `通報を送信しました（${report.id}）`;
+        reportNote.value = "";
+      });
+    }
+  </script>
+</body>
+</html>

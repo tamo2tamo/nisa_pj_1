@@ -1,0 +1,429 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NISA Lens Mock - User</title>
+  <link rel="stylesheet" href="nisa_mock.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-XXXXXXXXXX", { anonymize_ip: true });
+  </script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="logo">NISA Lens | User</div>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="#list">検索</a>
+        <a href="#submit">投稿</a>
+        <a href="#auth">認証</a>
+      </nav>
+      <a class="btn ghost" href="nisa_admin_mock.html">管理者画面</a>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">利用者画面</p>
+        <h1>自分に合う NISA運用タイプを探す</h1>
+        <p>属性・商品分類・成績を組み合わせ、似た条件の運用者を円グラフで比較できます。</p>
+        <div class="hero-cta">
+          <button class="btn">おすすめ順で探す</button>
+          <button class="btn ghost">投稿して審査に出す</button>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <h3>あなたの条件</h3>
+        <div class="chips">
+          <span>30代</span><span>既婚子あり</span><span>会社員</span><span>持家</span><span>リスク中</span><span>バランス</span>
+        </div>
+        <p class="score">類似スコアで並び替え: ON</p>
+      </div>
+    </section>
+
+    <section id="list" class="page">
+      <div class="page-head">
+        <h2>検索一覧</h2>
+        <div class="sort-tools">
+          <label>並び替え
+            <select id="sortMode">
+              <option value="new_desc">新着順</option>
+              <option value="perf_1y_desc">過去1年成績順</option>
+              <option value="perf_since_desc">開始来成績順</option>
+              <option value="similar_desc">あなたに近い順</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="layout">
+        <aside class="filters card">
+          <h3>絞り込み（投稿と同じ選択肢）</h3>
+          <div class="grid2">
+            <label>年代<select><option>30代</option><option>20代</option><option>40代</option><option>50代</option><option>60代+</option></select></label>
+            <label>家族構成<select><option>既婚子あり</option><option>独身</option><option>既婚子なし</option><option>その他</option></select></label>
+            <label>住居<select><option>持家</option><option>賃貸</option></select></label>
+            <label>職業<select><option>会社員</option><option>公務員</option><option>自営業</option><option>学生</option><option>無職</option><option>その他</option></select></label>
+            <label>年収帯<select><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
+            <label>投資歴<select><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5年以上</option></select></label>
+            <label>NISA<select><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
+            <label>リスク許容度<select><option>中</option><option>低</option><option>高</option></select></label>
+            <label>投資方針<select><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
+            <label>投資商品分類（主）<select id="searchMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
+            <label>投資商品分類（副）<select><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
+            <label>投資 / 貯金 配分<select><option>95 / 5</option><option>90 / 10</option><option>80 / 20</option><option>70 / 30</option></select></label>
+          </div>
+          <div class="alloc-box">
+            <h4>投資 / 貯金 配分</h4>
+            <div class="bars">
+              <div><span>投資</span><b>95%</b></div>
+              <div><span>貯金</span><b>5%</b></div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button id="searchBtn" type="button">検索</button>
+          </div>
+          <p id="searchStatus" class="ga-note"></p>
+        </aside>
+
+        <div id="resultsList" class="results">
+          <article class="card post" data-static="1" data-post-id="SAMPLE-001" data-main-product="投信（海外インデックス）" data-created="2026-01-01T00:00:00.000Z" data-age="30代" data-family="既婚子あり" data-housing="持家" data-occupation="会社員" data-perf1y="11.8" data-perfsince="34.2">
+            <div class="meta"><span>30代</span><span>既婚子あり</span><span>会社員</span><span>持家</span></div>
+            <h3>商品分類が近い運用者</h3>
+            <p>過去1年 <b>+11.8%</b> / 開始来 <b>+34.2%</b></p>
+            <div class="pie-wrap">
+              <div class="pie" style="--segments: conic-gradient(#1f7a87 0 25%, #3e9cab 25% 45%, #66b8a1 45% 60%, #87c97b 60% 75%, #f2b765 75% 80%, #eba368 80% 85%, #d7c9a7 85% 90%, #9ea8b3 90% 95%, #c7d6d2 95% 100%);"></div>
+              <ul class="legend">
+                <li><i style="background:#1f7a87"></i>株（国内）25%</li>
+                <li><i style="background:#3e9cab"></i>株（海外）20%</li>
+                <li><i style="background:#66b8a1"></i>投信インデックス 30%</li>
+                <li><i style="background:#87c97b"></i>投信アクティブ 10%</li>
+                <li><i style="background:#f2b765"></i>不動産・債券 10%</li>
+                <li><i style="background:#c7d6d2"></i>貯金 5%</li>
+              </ul>
+            </div>
+            <div class="form-actions">
+              <a class="btn ghost" href="nisa_post_detail.html?id=SAMPLE-001">詳細を見る</a>
+            </div>
+            <div class="reacts"><button>参考になった</button><button>共感した</button><button>真似したい</button></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="submit" class="page">
+      <h2>投稿フォーム</h2>
+      <div class="card">
+        <p class="rule">禁止: 他者/他商品/他サービスへの批判・悪口、詐欺、宣伝、外部URL</p>
+        <label>表示ユーザー名
+          <input id="displayName" type="text" maxlength="20" placeholder="例: nisa_taro" />
+        </label>
+        <p id="displayNamePreview" class="ga-note">投稿者表示名: （未入力）</p>
+        <div class="grid3">
+          <label>年代<select id="submitAge"><option>30代</option><option>20代</option><option>40代</option><option>50代</option><option>60代+</option></select></label>
+          <label>家族構成<select id="submitFamily"><option>既婚子あり</option><option>独身</option><option>既婚子なし</option><option>その他</option></select></label>
+          <label>住居<select id="submitHousing"><option>持家</option><option>賃貸</option></select></label>
+          <label>職業<select id="submitOccupation"><option>会社員</option><option>公務員</option><option>自営業</option><option>学生</option><option>無職</option><option>その他</option></select></label>
+          <label>年収帯<select><option>500-800</option><option>〜300</option><option>300-500</option><option>800-1200</option><option>1200〜</option><option>回答しない</option></select></label>
+          <label>投資歴<select><option>3-5年</option><option>〜1年</option><option>1-3年</option><option>5年以上</option></select></label>
+          <label>NISA<select><option>両方</option><option>つみたてのみ</option><option>成長のみ</option></select></label>
+          <label>リスク許容度<select><option>中</option><option>低</option><option>高</option></select></label>
+          <label>投資方針<select><option>バランス</option><option>長期積立</option><option>攻め</option></select></label>
+          <label>投資商品分類（主）<select id="submitMainProduct"><option>投信（海外インデックス）</option><option>株（国内）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
+          <label>投資商品分類（副）<select id="submitSubProduct"><option>株（国内）</option><option>投信（海外インデックス）</option><option>株（海外）</option><option>投信（国内インデックス）</option><option>投信（国内アクティブ）</option><option>投信（海外アクティブ）</option><option>不動産（REIT）</option><option>債券</option><option>貯金</option></select></label>
+          <label>投資 / 貯金 配分<select><option>95 / 5</option><option>90 / 10</option><option>80 / 20</option><option>70 / 30</option></select></label>
+        </div>
+        <label>自由記述（200字以内）
+          <textarea id="freeText" rows="5" maxlength="200" placeholder="運用の考え方、リバランス頻度、再現できるルールを記入"></textarea>
+        </label>
+        <div class="check-tools">
+          <button id="reviewBtn" type="button">投稿内容確認</button>
+          <p id="charCount">0 / 200</p>
+        </div>
+        <div id="reviewPanel" class="check-result" aria-live="polite">
+          <p class="check-title">確認結果</p>
+          <p id="reviewSummary">まだ確認していません。</p>
+          <p id="reviewNgWords"></p>
+          <p id="reviewPreview"></p>
+        </div>
+        <div class="form-actions">
+          <button id="submitQueuedBtn" type="button">審査キューへ送信</button>
+        </div>
+        <p id="submitStatus" class="ga-note"></p>
+        <p class="notice">投稿後ステータス: <b>queued</b>（審査後に公開）</p>
+      </div>
+    </section>
+
+    <section id="auth" class="page">
+      <h2>認証フロー</h2>
+      <div class="auth-flow">
+        <div class="card"><h3>1段階目</h3><p>メール or Google ログイン</p></div>
+        <div class="arrow">→</div>
+        <div class="card"><h3>2段階目</h3><p>TOTP (Google Authenticator)</p></div>
+        <div class="arrow">→</div>
+        <div class="card"><h3>完了</h3><p>利用者機能が有効化</p></div>
+      </div>
+    </section>
+  </div>
+  <script>
+    const ngWords = [
+      "バカ", "アホ", "死ね", "最悪", "ゴミ", "情弱", "詐欺", "絶対儲かる",
+      "必ず儲かる", "今すぐ登録", "dmください", "line追加", "紹介コード", "案件",
+      "買うべき", "売るべき", "無能", "クソ"
+    ];
+
+    const freeText = document.getElementById("freeText");
+    const displayName = document.getElementById("displayName");
+    const submitAge = document.getElementById("submitAge");
+    const submitFamily = document.getElementById("submitFamily");
+    const submitHousing = document.getElementById("submitHousing");
+    const submitOccupation = document.getElementById("submitOccupation");
+    const submitMainProduct = document.getElementById("submitMainProduct");
+    const submitSubProduct = document.getElementById("submitSubProduct");
+    const searchMainProduct = document.getElementById("searchMainProduct");
+    const sortMode = document.getElementById("sortMode");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchStatus = document.getElementById("searchStatus");
+    const submitQueuedBtn = document.getElementById("submitQueuedBtn");
+    const submitStatus = document.getElementById("submitStatus");
+    const resultsList = document.getElementById("resultsList");
+    const filterSelects = [...document.querySelectorAll(".filters select")];
+    const displayNamePreview = document.getElementById("displayNamePreview");
+    const reviewBtn = document.getElementById("reviewBtn");
+    const charCount = document.getElementById("charCount");
+    const reviewPanel = document.getElementById("reviewPanel");
+    const reviewSummary = document.getElementById("reviewSummary");
+    const reviewNgWords = document.getElementById("reviewNgWords");
+    const reviewPreview = document.getElementById("reviewPreview");
+
+    const updateCount = () => {
+      charCount.textContent = `${freeText.value.length} / 200`;
+    };
+
+    const updateDisplayName = () => {
+      const name = displayName.value.trim();
+      displayNamePreview.textContent = `投稿者表示名: ${name || "（未入力）"}`;
+    };
+
+    const runCheck = () => {
+      const text = freeText.value.trim();
+      const normalized = text.toLowerCase();
+      const hits = ngWords.filter((word) => normalized.includes(word.toLowerCase()));
+      const hasUrl = /(https?:\/\/|www\.|[a-z0-9-]+\.(com|net|jp|org))/i.test(text);
+
+      reviewPreview.textContent = text ? `内容: ${text}` : "内容: （未入力）";
+
+      if (!text) {
+        reviewPanel.className = "check-result";
+        reviewSummary.textContent = "ユーザー名と投稿内容を入力してから確認してください。";
+        reviewNgWords.textContent = "";
+        return;
+      }
+
+      if (!displayName.value.trim()) {
+        reviewPanel.className = "check-result ng";
+        reviewSummary.textContent = "表示ユーザー名を入力してください。";
+        reviewNgWords.textContent = "";
+        return;
+      }
+
+      if (hits.length === 0 && !hasUrl) {
+        reviewPanel.className = "check-result ok";
+        reviewSummary.textContent = "NGワード・URLは検知されませんでした。審査キューへ送信可能です。";
+        reviewNgWords.textContent = "";
+        return;
+      }
+
+      reviewPanel.className = "check-result ng";
+      reviewSummary.textContent = "NG候補を検知しました。内容を修正してください。";
+      reviewNgWords.textContent = `検知: ${[...hits, hasUrl ? "URL/外部リンク疑い" : ""].filter(Boolean).join(", ")}`;
+    };
+
+    const runSearch = () => {
+      const selected = searchMainProduct.value;
+      const cards = [...resultsList.querySelectorAll(".post")];
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches = card.dataset.mainProduct === selected;
+        card.style.display = matches ? "" : "none";
+        if (matches) visible += 1;
+      });
+      searchStatus.textContent = `${selected} で ${visible} 件ヒット`;
+      applySort();
+      saveSearchPreferences();
+    };
+
+    const getCardData = (card) => ({
+      created: Date.parse(card.dataset.created || "1970-01-01T00:00:00.000Z"),
+      perf1y: Number(card.dataset.perf1y || 0),
+      perfSince: Number(card.dataset.perfsince || 0),
+      age: card.dataset.age || "",
+      family: card.dataset.family || "",
+      housing: card.dataset.housing || "",
+      occupation: card.dataset.occupation || "",
+      mainProduct: card.dataset.mainProduct || ""
+    });
+
+    const similarityScore = (data) => {
+      let score = 0;
+      if (data.age === "30代") score += 1;
+      if (data.family === "既婚子あり") score += 1;
+      if (data.housing === "持家") score += 1;
+      if (data.occupation === "会社員") score += 1;
+      if (data.mainProduct === searchMainProduct.value) score += 1;
+      return score;
+    };
+
+    const applySort = () => {
+      const mode = sortMode.value;
+      const cards = [...resultsList.querySelectorAll(".post")];
+      cards.sort((a, b) => {
+        const da = getCardData(a);
+        const db = getCardData(b);
+        if (mode === "perf_1y_desc") return db.perf1y - da.perf1y;
+        if (mode === "perf_since_desc") return db.perfSince - da.perfSince;
+        if (mode === "similar_desc") return similarityScore(db) - similarityScore(da);
+        return db.created - da.created;
+      });
+      cards.forEach((card) => resultsList.appendChild(card));
+      saveSearchPreferences();
+    };
+
+    const saveSearchPreferences = () => {
+      const payload = {
+        filters: filterSelects.map((el) => el.value),
+        sort_mode: sortMode.value
+      };
+      localStorage.setItem("nisaSearchPreferences", JSON.stringify(payload));
+    };
+
+    const restoreSearchPreferences = () => {
+      const raw = localStorage.getItem("nisaSearchPreferences");
+      if (!raw) return;
+      try {
+        const saved = JSON.parse(raw);
+        if (Array.isArray(saved.filters)) {
+          filterSelects.forEach((el, idx) => {
+            if (saved.filters[idx] !== undefined) {
+              el.value = saved.filters[idx];
+            }
+          });
+        }
+        if (saved.sort_mode) {
+          sortMode.value = saved.sort_mode;
+        }
+      } catch (_) {
+        localStorage.removeItem("nisaSearchPreferences");
+      }
+    };
+
+    const escapeHtml = (value) => value
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll("\"", "&quot;")
+      .replaceAll("'", "&#039;");
+
+    const createPublishedCard = (post) => {
+      const note = post.note ? escapeHtml(post.note.slice(0, 120)) : "投稿コメントなし";
+      return `
+        <article class="card post"
+          data-dynamic="1"
+          data-main-product="${escapeHtml(post.main_product)}"
+          data-created="${escapeHtml(post.created_at || "")}"
+          data-age="${escapeHtml(post.age)}"
+          data-family="${escapeHtml(post.family)}"
+          data-housing="${escapeHtml(post.housing)}"
+          data-occupation="${escapeHtml(post.occupation)}"
+          data-perf1y="${Number(post.perf_1y).toFixed(1)}"
+          data-perfsince="${Number(post.perf_since).toFixed(1)}">
+          <div class="meta">
+            <span>${escapeHtml(post.age)}</span>
+            <span>${escapeHtml(post.family)}</span>
+            <span>${escapeHtml(post.occupation)}</span>
+            <span>${escapeHtml(post.housing)}</span>
+            <span>@${escapeHtml(post.display_name)}</span>
+          </div>
+          <h3>承認済みユーザー投稿</h3>
+          <p>過去1年 <b>+${Number(post.perf_1y).toFixed(1)}%</b> / 開始来 <b>+${Number(post.perf_since).toFixed(1)}%</b></p>
+          <div class="alloc-box">
+            <div class="bars">
+              <div><span>主分類</span><b>${escapeHtml(post.main_product)}</b></div>
+              <div><span>副分類</span><b>${escapeHtml(post.sub_product)}</b></div>
+            </div>
+          </div>
+          <p class="ga-note">${note}</p>
+          <div class="form-actions">
+            <a class="btn ghost" href="nisa_post_detail.html?id=${encodeURIComponent(post.id)}">詳細を見る</a>
+          </div>
+          <div class="reacts"><button>参考になった</button><button>共感した</button><button>真似したい</button></div>
+        </article>
+      `;
+    };
+
+    const renderPublishedPosts = () => {
+      const published = JSON.parse(localStorage.getItem("nisaPublishedPosts") || "[]");
+      const hiddenIds = new Set(JSON.parse(localStorage.getItem("nisaHiddenPostIds") || "[]"));
+      resultsList.querySelectorAll("article[data-dynamic='1']").forEach((el) => el.remove());
+      const visible = published.filter((post) => !hiddenIds.has(String(post.id)));
+      if (visible.length === 0) return;
+      const html = visible.map((post) => createPublishedCard(post)).join("");
+      resultsList.insertAdjacentHTML("afterbegin", html);
+    };
+
+    const submitQueued = () => {
+      runCheck();
+      if (!reviewPanel.classList.contains("ok")) {
+        submitStatus.textContent = "投稿内容確認でOKになってから送信してください。";
+        return;
+      }
+      const queuedKey = "nisaQueuedPosts";
+      const queued = JSON.parse(localStorage.getItem(queuedKey) || "[]");
+      const post = {
+        id: `P-${Date.now()}`,
+        display_name: displayName.value.trim(),
+        age: submitAge.value,
+        family: submitFamily.value,
+        housing: submitHousing.value,
+        occupation: submitOccupation.value,
+        main_product: submitMainProduct.value,
+        sub_product: submitSubProduct.value,
+        perf_1y: 5 + Math.random() * 12,
+        perf_since: 10 + Math.random() * 35,
+        note: freeText.value.trim(),
+        status: "queued",
+        created_at: new Date().toISOString()
+      };
+      queued.unshift(post);
+      localStorage.setItem(queuedKey, JSON.stringify(queued));
+      submitStatus.textContent = `送信完了: ${post.id} を審査キューに追加しました。`;
+      freeText.value = "";
+      updateCount();
+    };
+
+    freeText.addEventListener("input", updateCount);
+    displayName.addEventListener("input", updateDisplayName);
+    reviewBtn.addEventListener("click", runCheck);
+    searchBtn.addEventListener("click", runSearch);
+    sortMode.addEventListener("change", applySort);
+    submitQueuedBtn.addEventListener("click", submitQueued);
+    filterSelects.forEach((el) => {
+      el.addEventListener("change", saveSearchPreferences);
+    });
+    window.addEventListener("storage", (event) => {
+      if (event.key === "nisaPublishedPosts" || event.key === "nisaHiddenPostIds") {
+        renderPublishedPosts();
+        runSearch();
+      }
+    });
+    updateCount();
+    updateDisplayName();
+    restoreSearchPreferences();
+    renderPublishedPosts();
+    runSearch();
+  </script>
+</body>
+</html>
