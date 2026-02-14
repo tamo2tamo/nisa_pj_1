@@ -10,6 +10,11 @@ const isAdminEmail = (email?: string) => {
     .filter(Boolean);
   return !!email && list.includes(email.toLowerCase());
 };
+const adminList = () =>
+  (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
 
 async function hidePost(formData: FormData) {
   "use server";
@@ -47,11 +52,23 @@ export default async function AdminPage({
       <main className="mx-auto max-w-2xl p-6">
         <h1 className="text-2xl font-bold">権限がありません</h1>
         <p className="text-slate-600">ADMIN_EMAILS に登録された管理者のみアクセス可能です。</p>
+        <p className="mt-2 text-sm text-slate-700">現在ログイン中: {user.email ?? "(unknown)"}</p>
+        <p className="text-sm text-slate-700">許可メール: {adminList().join(", ") || "(未設定)"}</p>
       </main>
     );
   }
 
-  const admin = createAdminClient();
+  let admin;
+  try {
+    admin = createAdminClient();
+  } catch {
+    return (
+      <main className="mx-auto max-w-2xl p-6">
+        <h1 className="text-2xl font-bold">管理者設定エラー</h1>
+        <p className="text-slate-600">SUPABASE_SERVICE_ROLE_KEY が未設定です。Vercelの環境変数を確認してください。</p>
+      </main>
+    );
+  }
   const [{ data: posts = [] }, { data: reports = [] }] = await Promise.all([
     admin.from("posts").select("*").order("created_at", { ascending: false }).limit(100),
     admin.from("reports").select("*").order("created_at", { ascending: false }).limit(100),
